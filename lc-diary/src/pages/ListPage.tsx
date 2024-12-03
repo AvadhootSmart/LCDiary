@@ -1,9 +1,6 @@
-import React from 'react'
 
 const ListPage = () => {
-  return (
-    <div>ListPage</div>
-  )
-}
+  return <div className="gradient w-full h-screen text-white">ListPage</div>;
+};
 
-export default ListPage
+export default ListPage;

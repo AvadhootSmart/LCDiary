@@ -2,15 +2,19 @@
 module.exports = {
     darkMode: ["class"],
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
-  theme: {
-  	extend: {
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		},
-  		colors: {}
-  	}
-  },
-  plugins: [require("tailwindcss-animate")],
-}
+    theme: {
+        extend: {
+            borderRadius: {
+                lg: "var(--radius)",
+                md: "calc(var(--radius) - 2px)",
+                sm: "calc(var(--radius) - 4px)",
+            },
+            colors: {},
+            fontFamily: {
+                Roboto: ["Roboto", "sans-serif"],
+                Montserrat: ["Montserrat", "sans-serif"],
+            },
+        },
+    },
+    plugins: [require("tailwindcss-animate")],
+};
