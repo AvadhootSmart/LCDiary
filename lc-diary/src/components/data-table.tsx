@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -16,17 +16,21 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 import { AddProblemPopup } from "./addProblemPopup";
-import { Problem } from "@/data/problems";
-
+import type { Problem } from "@/types/problems";
+import useProblemStore from "@/store/problems";
 
 interface DataTableProps {
-  columns: ColumnDef<Data>[];
-  data: Problem[];
+  columns: ColumnDef<Problem>[];
 }
 
-const DataTable: React.FC<DataTableProps> = ({ columns, data }) => {
-  const [tableData, setTableData] = useState(data);
+const DataTable: React.FC<DataTableProps> = ({ columns }) => {
+  const { problems, addProblem } = useProblemStore();
+  const [tableData, setTableData] = useState(problems);
   const [sorting, setSorting] = useState<SortingState>([]);
+
+  useEffect(() => {
+    setTableData(problems); // Update table data when Zustand store changes
+  }, [problems]);
 
   const table = useReactTable({
     data: tableData,
@@ -42,11 +46,15 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data }) => {
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
   });
+
   return (
     <div className="space-y-4">
-      <div className="rounded-lg border border-border w-[70vw]">
+      <div className="relative rounded-lg border border-border w-[70vw] dark">
+        <div className="absolute -top-8 right-0">
+          <AddProblemPopup onAddProblem={(problem) => addProblem(problem)} />
+        </div>
         <Table>
-          <TableHeader className="text-2xl bg-zinc-900 w-fit">
+          <TableHeader className="text-2xl w-fit bg-black">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -62,10 +70,10 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data }) => {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="text-xl">
+          <TableBody className="text-xl text-white">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className=" place-content-center">
+                <TableRow key={row.id} className="">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
@@ -85,14 +93,14 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data }) => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  <AddProblemPopup />
+                  No Problems Added Yet..
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 dark">
         <Button
           variant="outline"
           size="sm"

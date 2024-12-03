@@ -20,7 +20,9 @@ exports.scrapeProblemData = async (URL) => {
             //   .map((line) => line.innerText)
             //   .join("\n");
             // const code = document.querySelector(".view-lines").innerText;
-            const title = document.querySelector(".text-title-large").innerText;
+            const title = document
+                .querySelector(".text-title-large")
+                .innerText.slice(3);
             const difficulty = document.querySelector(".text-caption").innerText;
             const topics = Array.from(
                 document.querySelectorAll('a[href^="/tag/"]'),

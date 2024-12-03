@@ -4,10 +4,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import { LucideArrowUpDown } from "lucide-react";
 
 const sortingOrder = ["Easy", "Medium", "Hard"];
 
-export const columns: ColumnDef<Problem>[] = [
+export const followColumns: ColumnDef<Problem>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -40,8 +41,12 @@ export const columns: ColumnDef<Problem>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-xl"
         >
-          Difficulty
+          Difficulty{" "}
+          <span>
+            <LucideArrowUpDown />
+          </span>
         </Button>
       );
     },
@@ -70,7 +75,62 @@ export const columns: ColumnDef<Problem>[] = [
     header: "Topics",
     cell: ({ row }) => (
       <div className="flex flex-wrap gap-1 w-fit">
-        {row.original.topics.map((topic) => (
+        {row.original.topics.map((topic: string) => (
+          <Badge key={topic} variant="outline" className="text-md">
+            {topic}
+          </Badge>
+        ))}
+      </div>
+    ),
+  },
+];
+export const previewColumns: ColumnDef<Problem>[] = [
+  {
+    accessorKey: "title",
+    header: "Title",
+  },
+  {
+    accessorKey: "difficulty",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-xl"
+        >
+          Difficulty{" "}
+          <span>
+            <LucideArrowUpDown />
+          </span>
+        </Button>
+      );
+    },
+    sortingFn: (rowA, rowB, columnId) => {
+      const valueA = rowA.getValue(columnId) as string;
+      const valueB = rowB.getValue(columnId) as string;
+      return sortingOrder.indexOf(valueA) - sortingOrder.indexOf(valueB);
+    },
+    cell: ({ row }) => {
+      const difficulty = row.getValue("difficulty") as string;
+      return (
+        <h1
+          className={cn("text-md", {
+            "text-green-500": difficulty === "Easy",
+            "text-yellow-500": difficulty === "Medium",
+            "text-red-500": difficulty === "Hard",
+          })}
+        >
+          {difficulty}
+        </h1>
+      );
+    },
+  },
+  {
+    accessorKey: "topics",
+    header: "Topics",
+    cell: ({ row }) => (
+      <div className="flex flex-wrap gap-1 w-fit">
+        {row.original.topics.map((topic: string) => (
           <Badge key={topic} variant="outline" className="text-md">
             {topic}
           </Badge>

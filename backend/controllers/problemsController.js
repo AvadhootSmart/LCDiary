@@ -7,7 +7,7 @@ exports.getProblemData = async (req, res) => {
     try {
         const problemData = await scrapeProblemData(req.body.URL);
         // const newProblem = await addProblem(problemData);
-        res.status(200).json({ Problem: problemData });
+        res.status(200).json({ ...problemData });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
