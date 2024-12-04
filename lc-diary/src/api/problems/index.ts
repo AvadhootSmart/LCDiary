@@ -1,4 +1,4 @@
-import { Problem } from "@/data/problems";
+import { Problem } from "@/types/problems";
 import { api } from "../axios.config";
 
 export const addProblems = (problems: Problem[]) => {

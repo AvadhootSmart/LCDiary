@@ -1,33 +1,31 @@
 import { Link } from "react-router";
-import { Button } from "./ui/button";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
 import { FlipLink } from "./flipLink";
+import { AuthenticationPopup } from "./authenticationPopup";
+import useUser from "@/store/users";
 
 export const Navbar = () => {
+  const { user } = useUser();
   return (
-    <div className="dark fixed top-12 backdrop-blur border-2 border-white text-xl rounded-full p-2 flex justify-center gap-2 items-center">
-      <Link to="/profile" className="font-Montserrat p-4">
-        <FlipLink>Profile</FlipLink>
+    <div className="dark fixed top-0 backdrop-blur text-xl flex justify-between items-center h-20 w-full p-20">
+      <Link to="/" className="font-Montserrat p-4">
+        <FlipLink>LCDIARY</FlipLink>
       </Link>
-      <Link to="/createList" className="font-Montserrat p-4">
-        <FlipLink>Create List</FlipLink>
-      </Link>
-      <SignedOut>
-        <SignInButton>
-          <div className="p-4">
-            <FlipLink>SignIn</FlipLink>
-          </div>
-        </SignInButton>
-      </SignedOut>
-      <div className="p-4 pt-6">
-        <SignedIn>
-          <UserButton appearance={{ elements: { userButtonAvatarBox: "size-8" } }} />
-        </SignedIn>
+      <div className="flex gap-2">
+        {user && (
+          <>
+            <Link to="/profile" className="font-Montserrat p-4">
+              <FlipLink>Profile</FlipLink>
+            </Link>
+            <Link to="/createList" className="font-Montserrat p-4">
+              <FlipLink>Create List</FlipLink>
+            </Link>
+          </>
+        )}
+        {!user && (
+          <AuthenticationPopup>
+            <FlipLink>SignIN</FlipLink>
+          </AuthenticationPopup>
+        )}
       </div>
     </div>
   );

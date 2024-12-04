@@ -12,7 +12,11 @@ import { useState } from "react";
 import { ReqInput } from "./reqInput";
 import { Problem } from "@/types/problems";
 
-export const AddProblemPopup = ({ onAddProblem }: {onAddProblem: (problem: Problem) => void}) => {
+export const AddProblemPopup = ({
+  onAddProblem,
+}: {
+  onAddProblem: (problem: Problem) => void;
+}) => {
   const [url, setUrl] = useState<string>("");
 
   const handleAdd = async () => {
@@ -36,7 +40,13 @@ export const AddProblemPopup = ({ onAddProblem }: {onAddProblem: (problem: Probl
             Add LeetCode Problem
           </DialogTitle>
         </DialogHeader>
-        <ReqInput value={url} onChange={(e) => setUrl(e.target.value)} />
+        <ReqInput
+          isRequired
+          placeholder="https://leetcode.com/problems/*"
+          label="URL"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
         <Button onClick={handleAdd}>Add</Button>
       </DialogContent>
     </Dialog>

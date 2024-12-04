@@ -18,6 +18,10 @@ import {
 import { AddProblemPopup } from "./addProblemPopup";
 import type { Problem } from "@/types/problems";
 import useProblemStore from "@/store/problems";
+import { createList } from "@/api/lists";
+import useUser from "@/store/users";
+import { toast } from "sonner";
+import { ReqInput } from "./reqInput";
 
 interface DataTableProps {
   columns: ColumnDef<Problem>[];
@@ -25,13 +29,24 @@ interface DataTableProps {
 
 const DataTable: React.FC<DataTableProps> = ({ columns }) => {
   const { problems, addProblem } = useProblemStore();
+  const { user } = useUser();
   const [tableData, setTableData] = useState(problems);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [listName, setListName] = useState("");
 
   useEffect(() => {
-    setTableData(problems); // Update table data when Zustand store changes
+    setTableData(problems);
   }, [problems]);
 
+  const handleSubmit = async () => {
+    if (!user) return;
+    if (tableData.length === 0) {
+      toast.message("You need to have at least one problem in your list");
+      return;
+    }
+
+    await createList(listName, tableData, user.token);
+  };
   const table = useReactTable({
     data: tableData,
     columns,
@@ -52,6 +67,22 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
       <div className="relative rounded-lg border border-border w-[70vw] dark">
         <div className="absolute -top-8 right-0">
           <AddProblemPopup onAddProblem={(problem) => addProblem(problem)} />
+        </div>
+        <div className="absolute -top-8 right-60">
+          <Button
+            variant={"default"}
+            className="rounded-t-xl text-xl"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </div>
+        <div className="absolute -top-20 left-0">
+          <ReqInput
+            label="List Name"
+            onChange={(e) => setListName(e.target.value)}
+            placeholder="Enter your list name"
+          />
         </div>
         <Table>
           <TableHeader className="text-2xl w-fit bg-black">

@@ -1,22 +1,32 @@
 const Lists = require("../models/list");
+const Users = require("../models/users");
 
 exports.createList = async (req, res) => {
-  const { name, problems, _id } = req.body;
-  try {
-    const newList = await Lists.create({ name, problems, user: _id });
-    res.status(201).json(newList);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error });
-  }
+    const { name, problems } = req.body;
+    try {
+        const existingList = await Lists.findOne({ name });
+        if (existingList) {
+            return res.status(401).json({ error: "List already exists" });
+        }
+        const newList = await Lists.create({ name, problems, user: req.user._id });
+
+        await Users.findOneAndUpdate(
+            { _id: req.user._id },
+            { $push: { lists: newList._id } },
+        );
+        res.status(201).json(newList);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
 exports.getUserLists = async (req, res) => {
-  try {
-    const lists = await Lists.find({ "user._id": req._id });
-    res.status(200).json(lists);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error });
-  }
+    try {
+        const lists = await Lists.find({ user: req.user._id });
+        res.status(200).json(lists);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error });
+    }
 };
