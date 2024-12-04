@@ -1,10 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Problem } from "@/data/problems";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Problem } from "@/types/problems";
 import { Button } from "./ui/button";
-import { LucideArrowUpDown } from "lucide-react";
+import { LucideArrowUpDown, Trash } from "lucide-react";
+import useProblemStore from "@/store/problems";
 
 const sortingOrder = ["Easy", "Medium", "Hard"];
 
@@ -137,5 +138,21 @@ export const previewColumns: ColumnDef<Problem>[] = [
         ))}
       </div>
     ),
+  },
+  {
+    accessorKey: "options",
+    header: "Delete",
+    cell: ({ row }) => {
+      return (
+        <Button
+          variant={"ghost"}
+          onClick={() =>
+            useProblemStore.getState().removeProblem(row.original.title)
+          }
+        >
+          <Trash className="text-xl text-red-400" />
+        </Button>
+      );
+    },
   },
 ];

@@ -3,7 +3,6 @@ import LandingPage from "./pages/LandingPage";
 import ProfilePage from "./pages/ProfilePage";
 import CreateListPage from "./pages/CreateListPage";
 import ListPage from "./pages/ListPage";
-import { Toaster } from "sonner";
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
           <Route path="/list/:id" element={<ListPage />} />
         </Routes>
       </Router>
-      <Toaster />
     </>
   );
 }

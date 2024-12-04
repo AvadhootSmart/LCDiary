@@ -5,6 +5,7 @@ import { create } from "zustand";
 type ProblemStore = {
   problems: Problem[];
   addProblem: (problem: Problem) => void;
+  removeProblem: (title: string) => void;
 };
 
 const useProblemStore = create<ProblemStore>((set) => ({
@@ -22,6 +23,13 @@ const useProblemStore = create<ProblemStore>((set) => ({
 
       return { problems: [...state.problems, problem] };
     });
+  },
+  removeProblem: (title: string) => {
+    set((state) => ({
+      problems: state.problems.filter((p) => p.title !== title),
+    }));
+
+    toast.success(`Problem removed: ${title}`);
   },
 }));
 

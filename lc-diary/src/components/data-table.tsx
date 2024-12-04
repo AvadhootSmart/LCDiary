@@ -39,7 +39,10 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
   }, [problems]);
 
   const handleSubmit = async () => {
-    if (!user) return;
+    if (!user) {
+      toast.warning("You need to be logged in to create a list");
+      return;
+    }
     if (tableData.length === 0) {
       toast.message("You need to have at least one problem in your list");
       return;
@@ -48,7 +51,6 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
       toast.message("List name is required");
       return;
     }
-
     await createList(listName, tableData, user.token);
   };
   const table = useReactTable({
@@ -69,8 +71,10 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
   return (
     <div className="space-y-4">
       <div className="relative rounded-lg border border-border w-[70vw] dark">
-        <div className="absolute -top-20 left-0">
+        <div className="absolute -top-[82px] left-0">
           <ReqInput
+            isRequired
+            className="bg-neutral-700"
             label="List Name"
             onChange={(e) => setListName(e.target.value)}
             placeholder="Enter your list name"
