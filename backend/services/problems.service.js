@@ -30,7 +30,7 @@ exports.scrapeProblemData = async (URL) => {
             return { title, difficulty, topics };
         });
 
-        return content;
+        return { content, URL };
         // console.log("Code:", content.code);
         // console.log("Difficulty:", content.difficulty);
         // console.log("Topics:", content.topics);

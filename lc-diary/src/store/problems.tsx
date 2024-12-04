@@ -1,12 +1,6 @@
+import { Problem } from "@/types/problems";
+import { toast } from "sonner";
 import { create } from "zustand";
-
-type Problem = {
-  id: string;
-  title: string;
-  status: boolean;
-  topics: string[];
-  difficulty: "Easy" | "Medium" | "Hard";
-};
 
 type ProblemStore = {
   problems: Problem[];
@@ -22,7 +16,7 @@ const useProblemStore = create<ProblemStore>((set) => ({
       );
 
       if (problemExists) {
-        alert(`Problem already exists:`);
+        toast.error(`Problem already exists: ${problem.title}`);
         return state;
       }
 

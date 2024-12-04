@@ -19,24 +19,20 @@ export const createList = async (
   problems: Problem[],
   token: string,
 ) => {
-  const response = await axios.post(
-    `${import.meta.env.VITE_BACKEND_URL}/v1/list/create`,
-    { name, problems },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/v1/list/create`,
+      { name, problems },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    },
-  );
-  switch (response.status) {
-    case 201:
-      toast.success(`List ${name} Created`);
-      break;
-    case 401:
-      toast.error(`List ${name} Already Exists`);
-      break;
-    default:
-      toast.warning("Something went wrong");
+    );
+    toast.success(`List ${name} Created`);
+    return response.data;
+  } catch {
+    toast.error(`List ${name} Already Exists`);
+    return null;
   }
-  return response.data;
 };

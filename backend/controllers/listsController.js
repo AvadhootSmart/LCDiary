@@ -6,7 +6,7 @@ exports.createList = async (req, res) => {
     try {
         const existingList = await Lists.findOne({ name });
         if (existingList) {
-            return res.status(401).json({ error: "List already exists" });
+            return res.status(400).json({ error: "List already exists" });
         }
         const newList = await Lists.create({ name, problems, user: req.user._id });
 
@@ -27,6 +27,6 @@ exports.getUserLists = async (req, res) => {
         res.status(200).json(lists);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };

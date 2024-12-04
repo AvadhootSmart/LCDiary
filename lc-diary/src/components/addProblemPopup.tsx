@@ -11,6 +11,8 @@ import { getProblem } from "@/api/problems";
 import { useState } from "react";
 import { ReqInput } from "./reqInput";
 import { Problem } from "@/types/problems";
+import useProblemStore from "@/store/problems";
+import { toast } from "sonner";
 
 export const AddProblemPopup = ({
   onAddProblem,
@@ -18,8 +20,13 @@ export const AddProblemPopup = ({
   onAddProblem: (problem: Problem) => void;
 }) => {
   const [url, setUrl] = useState<string>("");
+  const { problems } = useProblemStore();
 
   const handleAdd = async () => {
+    if (problems.some((p) => p.URL === url)) {
+      toast.error(`Problem already exists`);
+      return;
+    }
     const response = await getProblem(url);
     const problem = response.data;
     if (problem) onAddProblem(problem);

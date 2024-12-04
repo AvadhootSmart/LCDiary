@@ -44,6 +44,10 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
       toast.message("You need to have at least one problem in your list");
       return;
     }
+    if (!listName) {
+      toast.message("List name is required");
+      return;
+    }
 
     await createList(listName, tableData, user.token);
   };
@@ -65,10 +69,14 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
   return (
     <div className="space-y-4">
       <div className="relative rounded-lg border border-border w-[70vw] dark">
-        <div className="absolute -top-8 right-0">
-          <AddProblemPopup onAddProblem={(problem) => addProblem(problem)} />
+        <div className="absolute -top-20 left-0">
+          <ReqInput
+            label="List Name"
+            onChange={(e) => setListName(e.target.value)}
+            placeholder="Enter your list name"
+          />
         </div>
-        <div className="absolute -top-8 right-60">
+        <div className="absolute -top-8 right-0">
           <Button
             variant={"default"}
             className="rounded-t-xl text-xl"
@@ -77,12 +85,8 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
             Submit
           </Button>
         </div>
-        <div className="absolute -top-20 left-0">
-          <ReqInput
-            label="List Name"
-            onChange={(e) => setListName(e.target.value)}
-            placeholder="Enter your list name"
-          />
+        <div className="absolute -top-8 right-32">
+          <AddProblemPopup onAddProblem={(problem) => addProblem(problem)} />
         </div>
         <Table>
           <TableHeader className="text-2xl w-fit bg-black">
