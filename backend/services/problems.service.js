@@ -3,15 +3,28 @@ const Problems = require("../models/problems");
 
 exports.scrapeProblemData = async (URL) => {
     const browser = await puppeteer.launch({
-        headless: false,
-        executablePath: "/usr/bin/google-chrome", // Ensure Chrome is installed
+        headless: true,
+        // executablePath: "/usr/bin/google-chrome", // Ensure Chrome is installed
+        args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-blink-features=AutomationControlled",
+        ],
     });
 
     const page = await browser.newPage();
 
     try {
-        await page.goto(URL, { waitUntil: "networkidle0" });
+        await page.setUserAgent(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        );
+        await page.setViewport({ width: 1280, height: 800 });
 
+        await page.goto(URL, { waitUntil: "domcontentloaded" });
+
+        await page.waitForSelector(".text-title-large");
+        await page.waitForSelector(".text-caption");
+        await page.waitForSelector('a[href^="/tag/"]');
         // Extract code snippet
         const content = await page.evaluate(() => {
             // CodeMirror stores text in spans within `.view-lines`
