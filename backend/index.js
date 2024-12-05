@@ -12,11 +12,13 @@ app.use(express.urlencoded({ extended: true }));
 
 connectDB();
 
-
+app.get("/", (req, res) => {
+    res.send("Backend is running successfully!");
+});
 app.use("/v1/auth", authRoutes);
 app.use("/v1/problem", problemRoutes);
 app.use("/v1/list", listRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+    console.log(`Server started on port ${PORT}`);
 });
