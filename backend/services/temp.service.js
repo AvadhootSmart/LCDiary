@@ -1,25 +1,18 @@
 const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-core");
 
-const executablePath = "/vercel/.cache/puppeteer/chrome/linux-127.0.6533.88";
 exports.scrapeProblemData = async (URL) => {
     let browser = null;
 
     // const executablePath = await chromium.executablePath();
     // console.log("PATHBCCCCCCCCCCCCCCCC", executablePath);
+    const executablePath = "/vercel/.cache/puppeteer/chrome/linux-127.0.6533.88";
 
     try {
         browser = await puppeteer.launch({
-            args: [
-                ...chromium.args,
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-gpu",
-                "--headless",
-            ],
-            defaultViewport: chromium.defaultViewport,
+            args: ["--no-sandbox", "--disable-setuid-sandbox"],
             executablePath: executablePath,
-            headless: "shell",
+            headless: true,
             ignoreHTTPSErrors: true,
         });
 
