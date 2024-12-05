@@ -6,12 +6,11 @@ exports.scrapeProblemData = async (URL) => {
 
     // const executablePath = await chromium.executablePath();
     // console.log("PATHBCCCCCCCCCCCCCCCC", executablePath);
-    const executablePath = "/vercel/.cache/puppeteer/chrome/linux-127.0.6533.88";
 
     try {
         browser = await puppeteer.launch({
             args: ["--no-sandbox", "--disable-setuid-sandbox"],
-            executablePath: executablePath,
+            executablePath: "/vercel/.cache/puppeteer/chrome/linux-127.0.6533.88",
             headless: true,
             ignoreHTTPSErrors: true,
         });
