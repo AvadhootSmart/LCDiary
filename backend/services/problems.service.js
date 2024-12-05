@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer");
 const Problems = require("../models/problems");
 
 exports.scrapeProblemData = async (URL) => {
