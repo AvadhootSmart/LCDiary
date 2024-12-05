@@ -1,10 +1,17 @@
 const puppeteer = require("puppeteer");
 const Problems = require("../models/problems");
+const path = require("path");
 
+const getChromePath = () => {
+    const puppeteerCorePath = require.resolve('puppeteer-core');
+    const basePath = path.dirname(puppeteerCorePath);
+    return path.join(basePath, '.local-chromium', 'chrome-linux', 'chrome');
+
+}
 exports.scrapeProblemData = async (URL) => {
     const browser = await puppeteer.launch({
+        executablePath: getChromePath(), // Ensure Chrome is installed
         headless: true,
-        // executablePath: "/usr/bin/google-chrome", // Ensure Chrome is installed
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",

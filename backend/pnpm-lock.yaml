@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@puppeteer/browsers':
+        specifier: ^2.5.0
+        version: 2.5.0
       axios:
         specifier: ^1.7.8
         version: 1.7.8
@@ -32,6 +35,9 @@ importers:
       puppeteer:
         specifier: ^23.9.0
         version: 23.9.0
+      puppeteer-core:
+        specifier: ^23.10.1
+        version: 23.10.1
     devDependencies:
       nodemon:
         specifier: ^3.1.7
@@ -56,6 +62,11 @@ packages:
 
   '@puppeteer/browsers@2.4.1':
     resolution: {integrity: sha512-0kdAbmic3J09I6dT8e9vE2JOCSt13wHCW5x/ly8TSt2bDtuIWe2TgLZZDHdcziw9AVCzflMAXCrVyRIhIs44Ng==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@puppeteer/browsers@2.5.0':
+    resolution: {integrity: sha512-6TQAc/5uRILE6deixJ1CR8rXyTbzXIXNgO1D0Woi9Bqicz2FV5iKP3BHYEg6o4UATCMcbQQ0jbmeaOkn/HQk2w==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -846,6 +857,10 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
+  puppeteer-core@23.10.1:
+    resolution: {integrity: sha512-ey6NwixHYEUnhCA/uYi7uQQ4a0CZw4k+MatbHXGl5GEzaiRQziYUxc2HGpdQZ/gnh4KQWAKkocyIg1/dIm5d0g==}
+    engines: {node: '>=18'}
+
   puppeteer-core@23.9.0:
     resolution: {integrity: sha512-hLVrav2HYMVdK0YILtfJwtnkBAwNOztUdR4aJ5YKDvgsbtagNr6urUJk9HyjRA9e+PaLI3jzJ0wM7A4jSZ7Qxw==}
     engines: {node: '>=18'}
@@ -1145,6 +1160,19 @@ snapshots:
       sparse-bitfield: 3.0.3
 
   '@puppeteer/browsers@2.4.1':
+    dependencies:
+      debug: 4.3.7(supports-color@5.5.0)
+      extract-zip: 2.0.1
+      progress: 2.0.3
+      proxy-agent: 6.4.0
+      semver: 7.6.3
+      tar-fs: 3.0.6
+      unbzip2-stream: 1.4.3
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@puppeteer/browsers@2.5.0':
     dependencies:
       debug: 4.3.7(supports-color@5.5.0)
       extract-zip: 2.0.1
@@ -1974,6 +2002,19 @@ snapshots:
       once: 1.4.0
 
   punycode@2.3.1: {}
+
+  puppeteer-core@23.10.1:
+    dependencies:
+      '@puppeteer/browsers': 2.5.0
+      chromium-bidi: 0.8.0(devtools-protocol@0.0.1367902)
+      debug: 4.3.7(supports-color@5.5.0)
+      devtools-protocol: 0.0.1367902
+      typed-query-selector: 2.12.0
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   puppeteer-core@23.9.0:
     dependencies:

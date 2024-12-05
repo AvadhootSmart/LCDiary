@@ -11,7 +11,7 @@ exports.getProblemData = async (req, res) => {
         res.status(200).json({ ...content, URL });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: `Internal server error: ${error}` });
     }
 };
 
