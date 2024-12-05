@@ -11,6 +11,9 @@ importers:
       '@puppeteer/browsers':
         specifier: ^2.5.0
         version: 2.5.0
+      '@sparticuz/chromium-min':
+        specifier: ^131.0.1
+        version: 131.0.1
       axios:
         specifier: ^1.7.8
         version: 1.7.8
@@ -69,6 +72,10 @@ packages:
     resolution: {integrity: sha512-6TQAc/5uRILE6deixJ1CR8rXyTbzXIXNgO1D0Woi9Bqicz2FV5iKP3BHYEg6o4UATCMcbQQ0jbmeaOkn/HQk2w==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@sparticuz/chromium-min@131.0.1':
+    resolution: {integrity: sha512-kQqKflJtjcBb8aA1b6L4dhU/8UbCJHcjb3au8cjBhKAG7nzqh//92rHCB6ULkgV0CMEQmfp3LDBQ/W8Wg2k+Yg==}
+    engines: {node: '>= 16'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
@@ -1184,6 +1191,13 @@ snapshots:
       yargs: 17.7.2
     transitivePeerDependencies:
       - supports-color
+
+  '@sparticuz/chromium-min@131.0.1':
+    dependencies:
+      follow-redirects: 1.15.9
+      tar-fs: 3.0.6
+    transitivePeerDependencies:
+      - debug
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
