@@ -4,7 +4,10 @@ const Problems = require("../models/problems");
 exports.scrapeProblemData = async (URL) => {
     const browser = await puppeteer.launch({
         headless: true,
-        // executablePath: "/usr/bin/google-chrome", // Ensure Chrome is installed
+        executablePath:
+            process.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
