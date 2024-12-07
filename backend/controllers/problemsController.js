@@ -1,9 +1,9 @@
 const {
-  // scrapeProblemData,
+  scrapeProblemData,
   addProblems,
 } = require("../services/problems.service");
 
-const { scrapeProblemData } = require("../services/temp.service");
+// const { scrapeProblemData } = require("../services/temp.service");
 
 exports.getProblemData = async (req, res) => {
   try {
