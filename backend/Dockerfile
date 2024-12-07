@@ -6,6 +6,6 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm install --unsafe-perm && npm ci --unsafe-perm
+RUN pnpm install && pnpm ci 
 COPY . .
 CMD [ "node", "index.js" ]
