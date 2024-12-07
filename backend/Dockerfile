@@ -14,4 +14,6 @@ RUN npm install && npm ci
 
 COPY --chown=pptruser:pptruser . .
 
+EXPOSE 27017
+
 CMD [ "node", "index.js" ]
