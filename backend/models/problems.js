@@ -19,6 +19,10 @@ const problemsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isSolved: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const Problems = mongoose.model("Problems", problemsSchema);

@@ -42,7 +42,7 @@ exports.scrapeProblemData = async (URL) => {
             const difficulty = document.querySelector(".text-caption").innerText;
             const topics = Array.from(
                 document.querySelectorAll('a[href^="/tag/"]'),
-            ).map((tag) => tag.innerText);
+            ).slice(0, 4).map((tag) => tag.innerText);
             return { title, difficulty, topics };
         });
 

@@ -7,6 +7,7 @@ const listSchema = new mongoose.Schema({
     },
     progress: {
         type: Number,
+        default: 0,
     },
     problems: [],
     user: {

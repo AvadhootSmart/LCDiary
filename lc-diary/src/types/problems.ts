@@ -1,7 +1,7 @@
 export type Problem = {
   URL: string;
   title: string;
-  status: boolean;
+  isSolved: boolean;
   topics: string[];
   difficulty: "Easy" | "Medium" | "Hard";
 };

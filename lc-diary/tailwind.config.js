@@ -8,6 +8,7 @@ module.exports = {
     theme: {
         animation: {
             aurora: "aurora 60s linear infinite",
+            pulse: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         },
         keyframes: {
             aurora: {
@@ -17,6 +18,9 @@ module.exports = {
                 to: {
                     backgroundPosition: "350% 50%, 350% 50%",
                 },
+            }, pulse: {
+                '0%, 100%': { opacity: 1 },
+                '50%': { opacity: 0.5 },
             },
         },
         extend: {
