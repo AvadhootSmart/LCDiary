@@ -34,6 +34,9 @@ export const SheetProfileCard = ({
           <Link to={`/List/${id}`}>
             <Button variant={"ghost"}>View</Button>
           </Link>
+          <Link to={`/List/${id}`}>
+            <Button variant={"ghost"}>Edit</Button>
+          </Link>
         </li>
       </ul>
     </>

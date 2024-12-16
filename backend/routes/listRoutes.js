@@ -6,6 +6,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 
 // v1/list
 router.get("/", isAuthenticated, listsController.getUserLists);
+router.get("/:id", isAuthenticated, listsController.getListById);
 router.post("/create",isAuthenticated, listsController.createList);
 
 module.exports = router;

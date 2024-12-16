@@ -1,19 +1,45 @@
 const mongoose = require("mongoose");
 
 const listSchema = new mongoose.Schema({
-    name: {
+  name: {
+    type: String,
+    required: true,
+  },
+  progress: {
+    type: Number,
+    default: 0,
+  },
+  problems: [
+    {
+      title: {
         type: String,
         required: true,
+      },
+      difficulty: {
+        type: String,
+        required: true,
+      },
+      URL: {
+        type: String,
+        required: true,
+      },
+      topics: [
+        {
+          type: String,
+          required: true,
+        },
+      ],
+      isSolved: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
     },
-    progress: {
-        type: Number,
-        default: 0,
-    },
-    problems: [],
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    },
+  ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Lists = mongoose.model("Lists", listSchema);
