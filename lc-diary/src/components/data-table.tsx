@@ -18,8 +18,6 @@ import {
 import { AddProblemPopup } from "./addProblemPopup";
 import type { Problem } from "@/types/problems";
 import { ReqInput } from "./reqInput";
-import { Link } from "react-router";
-import { Lists } from "@/types/lists";
 
 interface DataTableProps {
   columns: ColumnDef<Problem>[];
@@ -29,7 +27,7 @@ interface DataTableProps {
   addProblem?: (problem: Problem) => void;
   handleSubmit?: () => void;
   handleSync?: () => void;
-  handleUpdateList?: (list: Lists) => void;
+  handleEditList?: () => void;
   listName: string;
   setListName?: React.Dispatch<React.SetStateAction<string>>;
   type: "static" | "editable";
@@ -45,6 +43,7 @@ const DataTable: React.FC<DataTableProps> = ({
   setSorting,
   addProblem,
   handleSubmit,
+  handleEditList,
   setListName,
 }) => {
   const table = useReactTable({
@@ -108,18 +107,15 @@ const DataTable: React.FC<DataTableProps> = ({
                 Sync
               </Button>
             </div>
-            <Link
-              className="absolute -top-8 right-28"
-              to={`/List/edit/${listName}`}
-            >
+            <div className="absolute -top-8 right-28">
               <Button
                 variant={"default"}
                 className="rounded-t-xl text-xl"
-                onClick={handleSync}
+                onClick={handleEditList}
               >
-                Update List
+                Edit List
               </Button>
-            </Link>
+            </div>
           </>
         )}
         <Table>
