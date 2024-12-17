@@ -32,11 +32,11 @@ export const SheetProfileCard = ({
           </div>
 
           <Link to={`/List/${id}`}>
-            <Button variant={"ghost"}>View</Button>
+            <Button variant={"ghost"}>Follow</Button>
           </Link>
-          <Link to={`/List/${id}`}>
-            <Button variant={"ghost"}>Edit</Button>
-          </Link>
+          {/* <Link to={`/List/edit/${id}`}> */}
+          {/*   <Button variant={"ghost"}>Edit</Button> */}
+          {/* </Link> */}
         </li>
       </ul>
     </>

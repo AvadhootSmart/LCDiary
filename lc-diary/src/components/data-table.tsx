@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -17,42 +17,36 @@ import {
 } from "@tanstack/react-table";
 import { AddProblemPopup } from "./addProblemPopup";
 import type { Problem } from "@/types/problems";
-import useProblemStore from "@/store/problems";
-import { createList } from "@/api/lists";
-import useUser from "@/store/users";
-import { toast } from "sonner";
 import { ReqInput } from "./reqInput";
+import { Link } from "react-router";
+import { Lists } from "@/types/lists";
 
 interface DataTableProps {
   columns: ColumnDef<Problem>[];
+  tableData: Problem[];
+  sorting: SortingState;
+  setSorting: React.Dispatch<React.SetStateAction<SortingState>>;
+  addProblem?: (problem: Problem) => void;
+  handleSubmit?: () => void;
+  handleSync?: () => void;
+  handleUpdateList?: (list: Lists) => void;
+  listName: string;
+  setListName?: React.Dispatch<React.SetStateAction<string>>;
+  type: "static" | "editable";
 }
 
-const DataTable: React.FC<DataTableProps> = ({ columns }) => {
-  const { problems, addProblem } = useProblemStore();
-  const { user } = useUser();
-  const [tableData, setTableData] = useState(problems);
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [listName, setListName] = useState("");
-
-  useEffect(() => {
-    setTableData(problems);
-  }, [problems]);
-
-  const handleSubmit = async () => {
-    if (!user) {
-      toast.warning("You need to be logged in to create a list");
-      return;
-    }
-    if (tableData.length === 0) {
-      toast.message("You need to have at least one problem in your list");
-      return;
-    }
-    if (!listName) {
-      toast.message("List name is required");
-      return;
-    }
-    await createList(listName, tableData, user.token);
-  };
+const DataTable: React.FC<DataTableProps> = ({
+  columns,
+  tableData,
+  type,
+  sorting,
+  listName,
+  handleSync,
+  setSorting,
+  addProblem,
+  handleSubmit,
+  setListName,
+}) => {
   const table = useReactTable({
     data: tableData,
     columns,
@@ -71,27 +65,63 @@ const DataTable: React.FC<DataTableProps> = ({ columns }) => {
   return (
     <div className="space-y-4">
       <div className="relative rounded-lg border border-border w-[70vw] dark">
-        <div className="absolute -top-[82px] left-0">
-          <ReqInput
-            isRequired
-            className="bg-neutral-700"
-            label="List Name"
-            onChange={(e) => setListName(e.target.value)}
-            placeholder="Enter your list name"
-          />
-        </div>
-        <div className="absolute -top-8 right-0">
-          <Button
-            variant={"default"}
-            className="rounded-t-xl text-xl"
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-        </div>
-        <div className="absolute -top-8 right-32">
-          <AddProblemPopup onAddProblem={(problem) => addProblem(problem)} />
-        </div>
+        {type == "editable" ? (
+          <>
+            {listName && setListName && (
+              <div className="absolute -top-[82px] left-0">
+                <ReqInput
+                  isRequired
+                  className="bg-neutral-700"
+                  label="List Name"
+                  onChange={(e) => setListName(e.target.value)}
+                  value={listName}
+                  placeholder="Enter your list name"
+                />
+              </div>
+            )}
+            <div className="absolute -top-8 right-0">
+              <Button
+                variant={"default"}
+                className="rounded-t-xl text-xl"
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
+
+            {addProblem && (
+              <div className="absolute -top-9 right-32">
+                <AddProblemPopup
+                  onAddProblem={(problem) => addProblem(problem)}
+                />
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="absolute -top-8 right-0">
+              <Button
+                variant={"default"}
+                className="rounded-t-xl text-xl"
+                onClick={handleSync}
+              >
+                Sync
+              </Button>
+            </div>
+            <Link
+              className="absolute -top-8 right-28"
+              to={`/List/edit/${listName}`}
+            >
+              <Button
+                variant={"default"}
+                className="rounded-t-xl text-xl"
+                onClick={handleSync}
+              >
+                Update List
+              </Button>
+            </Link>
+          </>
+        )}
         <Table>
           <TableHeader className="text-2xl w-fit bg-black">
             {table.getHeaderGroups().map((headerGroup) => (

@@ -6,6 +6,7 @@ type ProblemStore = {
   problems: Problem[];
   addProblem: (problem: Problem) => void;
   removeProblem: (title: string) => void;
+  loadProblems: (problems: Problem[]) => void;
 };
 
 const useProblemStore = create<ProblemStore>((set) => ({
@@ -30,6 +31,9 @@ const useProblemStore = create<ProblemStore>((set) => ({
     }));
 
     toast.success(`Problem removed: ${title}`);
+  },
+  loadProblems: (problems: Problem[]) => {
+    set({ problems });
   },
 }));
 
