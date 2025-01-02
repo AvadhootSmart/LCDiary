@@ -5,29 +5,17 @@ import useProblemStore from "@/store/problems";
 import useUser from "@/store/users";
 import { SortingState } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
 import { toast } from "sonner";
 
 const CreateListPage = () => {
-  const location = useLocation();
-
-  const { problems, addProblem, loadProblems } = useProblemStore();
+  const { problems, addProblem } = useProblemStore();
   const { user } = useUser();
-
   const [tableData, setTableData] = useState(problems);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [listName, setListName] = useState("");
-
-  useEffect(() => {
-    if (location.pathname && "createList") {
-      loadProblems([]);
-    }
-  }, []);
-
   useEffect(() => {
     setTableData(problems);
   }, [problems]);
-
 
   const handleSubmit = async () => {
     if (!user) {

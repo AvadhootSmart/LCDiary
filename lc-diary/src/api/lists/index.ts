@@ -48,3 +48,20 @@ export const getListById = async (id: string, token: string) => {
     );
     return response.data;
 };
+
+export const updatelist = async (
+    id: string,
+    problems: Problem[],
+    token: string,
+) => {
+    const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/v1/list/update/${id}`,
+        { problems },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
+    return response.data;
+};

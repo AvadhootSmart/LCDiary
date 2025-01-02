@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const Problems = require("../models/problems");
+// const Problems = require("../models/problems");
 
 exports.scrapeProblemData = async (URL) => {
     const browser = await puppeteer.launch({
@@ -57,13 +57,13 @@ exports.scrapeProblemData = async (URL) => {
     }
 };
 
-exports.addProblems = async (problem) => {
-    try {
-        // const newProblem = await Problems.create(problem);
-        const newProblems = await Problems.insertMany(problem);
-        // Problems.insertMany(problem);
-        return newProblems;
-    } catch (error) {
-        console.error(error);
-    }
-};
+// exports.addProblems = async (problem) => {
+//     try {
+//         // const newProblem = await Problems.create(problem);
+//         const newProblems = await Problems.insertMany(problem);
+//         // Problems.insertMany(problem);
+//         return newProblems;
+//     } catch (error) {
+//         console.error(error);
+//     }
+// };
