@@ -23,13 +23,13 @@ exports.scrapeProblemData = async (URL) => {
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
     );
 
-    await page.goto(URL, { waitUntil: "domcontentloaded" });
+    await page.goto(URL, { waitUntil: "domcontentloaded" }, { timeout: 60000 });
 
     await page.setViewport({ width: 1280, height: 800 });
 
-    await page.waitForSelector(".text-title-large");
-    await page.waitForSelector(".text-caption");
-    await page.waitForSelector('a[href^="/tag/"]');
+    await page.waitForSelector(".text-title-large", { timeout: 60000 });
+    await page.waitForSelector(".text-caption", { timeout: 60000 });
+    await page.waitForSelector('a[href^="/tag/"]', { timeout: 60000 });
     // Extract code snippet
     const content = await page.evaluate(() => {
       // CodeMirror stores text in spans within `.view-lines`
