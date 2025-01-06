@@ -8,8 +8,6 @@ WORKDIR /usr/src/app
 
 COPY --chown=pptruser:pptruser package*.json ./
 
-COPY .env .
-
 USER pptruser
 
 RUN npm install && npm ci
